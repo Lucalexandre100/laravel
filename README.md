@@ -16,6 +16,12 @@
 ### Instalando Mysql
 > sudo apt install mysql-server-5.7 mysql-client-5.7 
 
+### Configurando o Mysql
+>  sudo mysql_secure_installation
+
+### Criando novo usuário
+>  sudo mysql -u root -p
+
 ## Apache
 
 ### Instalanado o Apache
