@@ -17,10 +17,36 @@
 > sudo apt install mysql-server-5.7 mysql-client-5.7 
 
 ### Configurando o Mysql
->  sudo mysql_secure_installation
 
-### Criando novo usuário
->  sudo mysql -u root -p
+#### Primeiro, se você já instalou o mysql server, desinstale completamente seguindo esse tutorial: 
+>http://tipslegais10.blogspot.com/2013/01/desinstalar-mysql-no-linux-por-completo.html
+
+#### Agora instale o Mysql server da seguinte forma:
+> $ sudo apt-get install -y mysql-server-5.7 mysql-client
+
+> $ sudo mysql_secure_installation
+
+#### Com o comando acima você vai definir uma senha para o usuário root, mas as regras para uso do root mudaram na versão 5.7
+
+siga as instruções desse tutorial
+
+> https://www.computerbeginnersguides.com/blog/2018/05/01/install-and-configure-mysql-server-in-ubuntu-18-04-bionic-beaver/
+
+#### Agora com a senha definida, entre como administrador e digite:
+> $ sudo mysql -u root -p
+
+vai aparecer o prompt do mysql
+
+#### Agora crie um novo usuário e conceda todas as permissões a ele:
+> mysql> CREATE USER 'novousuario'@'localhost' IDENTIFIED BY 'password';
+
+> mysql> GRANT ALL PRIVILEGES ON * . * TO 'novousuario'@'localhost';
+
+> mysql> FLUSH PRIVILEGES;
+
+> mysql> \q
+
+Agora experimente acessar o phpmyadmin com seu novo usuário !!!
 
 ## Apache
 
@@ -50,3 +76,5 @@
 
 > composer
   
+## Criando um projeto
+> 
