@@ -41,3 +41,81 @@ Neste momento o Apache não está sendo utilizado, o projeto roda em cima do ser
     ├── vendor
     └── webpack.mix.js
 ```
+
+### Pasta app
+
+```bash
+├── app
+│   ├── Console
+│   ├── Exceptions
+│   ├── Http
+│   ├── Providers
+│   └── User.php
+```
+
+Uma das pastas mais importantes. Nesta pasta é onde os controladores são criado. Toda a parte do core do sistema.
+
+### Pasta bootstrap
+
+```bash
+├── bootstrap
+│   ├── app.php
+│   └── cache
+```
+
+Não é a pasta do Twitter Bootstrap. Esta é a parte de inicialização do sistema.
+
+### Pasta config
+
+```bash
+├── config
+│   ├── app.php
+│   ├── auth.php
+│   ├── broadcasting.php
+│   ├── cache.php
+│   ├── database.php
+│   ├── filesystems.php
+│   ├── hashing.php
+│   ├── logging.php
+│   ├── mail.php
+│   ├── queue.php
+│   ├── services.php
+│   ├── session.php
+│   └── view.php
+```
+
+* Arrays e variáveis que são previamente declarados pela aplicação.
+
+### Pasta database
+
+```bash
+├── database
+│   ├── factories
+│   │   └── UserFactory.php
+│   ├── migrations
+│   │   ├── 2014_10_12_000000_create_users_table.php
+│   │   └── 2014_10_12_100000_create_password_resets_table.php
+│   └── seeds
+│       └── DatabaseSeeder.php
+```
+
+* As pastas *migrations* e *seeds* são bem utilizadas.
+
+### Pasta public
+
+```bash
+├── public
+│   ├── css
+│   ├── favicon.ico
+│   ├── index.php
+│   ├── js
+│   ├── robots.txt
+│   └── web.config
+```
+
+#### Arquivo index.php
+
+* Autoload: carrega os módulos que vão sendo necessários.
+
+* Chama o arquitp pp.php da pasta bootstrap, para a inicialização do sistema.
+
