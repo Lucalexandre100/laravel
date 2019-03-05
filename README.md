@@ -374,7 +374,6 @@ Não é a pasta do Twitter Bootstrap. Esta é a parte de inicialização do sist
 > ```bash
 > composer create-project --prefer-dist laravel/laravel rotas
 > php artisan serve
-```
 
 ### Arquivo routes/web.php
 
