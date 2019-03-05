@@ -18,6 +18,7 @@
 
 > ```bash
 > sudo apt install php7.2-mysql
+```
 
 ## Mysql
 
@@ -25,6 +26,7 @@
 
 > ```bash
 > sudo apt install mysql-server-5.7 mysql-client-5.7
+```
 
 ### Configurando o Mysql
 
@@ -45,8 +47,9 @@ siga as instruções desse tutorial
 
 #### Agora com a senha definida, entre como administrador e digite
 
-> ```shell
+> ```bash
 > sudo mysql -u root -p
+```
 
 vai aparecer o prompt do mysql
 
@@ -57,6 +60,7 @@ vai aparecer o prompt do mysql
 > mysql> GRANT ALL PRIVILEGES ON * . * TO 'novousuario'@'localhost';
 > mysql> FLUSH PRIVILEGES;
 > mysql> \q
+```
 
 Agora experimente acessar o phpmyadmin com seu novo usuário !!!
 
@@ -66,16 +70,19 @@ Agora experimente acessar o phpmyadmin com seu novo usuário !!!
 
 > ```bash
 > sudo apt install apache2
+```
 
 ### Interface Apache X PHP
 
 > ```bash
 > sudo apt install libapache2-mod-php7.2
+```
 
 ### Liberando o PHP no Apache
 
 > ```bash
 > sudo a2enmod php7.2
+```
 
 ## Composer
 
@@ -83,6 +90,7 @@ Agora experimente acessar o phpmyadmin com seu novo usuário !!!
 
 ```bash
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+
 
 php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 
@@ -103,6 +111,7 @@ composer
 
 > ```bash
 > composer create-project --prefer-dist laravel/laravel projeto1
+```
 
 ### Validando se tudo está fincionando
 
@@ -113,6 +122,7 @@ Resultado esperado:
 
 > ```bash
 > Laravel development server started: <http://127.0.0.1:8000>
+```
 
 * OBS:
 Neste momento o Apache não está sendo utilizado, o projeto roda em cima do servidor de desenvolvimento do Laravel.
@@ -364,6 +374,7 @@ Não é a pasta do Twitter Bootstrap. Esta é a parte de inicialização do sist
 > ```bash
 > composer create-project --prefer-dist laravel/laravel rotas
 > php artisan serve
+```
 
 ### Arquivo routes/web.php
 
@@ -382,6 +393,8 @@ Arquivo responsável pela roterização do sistema Web.
 | contains the "web" middleware group. Now create something great!
 |
  */
+
+use Illuminate\Http\Request;
 
 /** Retornando uma view */
 Route::get('/', function () {
@@ -473,9 +486,79 @@ Route::get('/person/{name}/{last_name}', function ($name, $last_name) {
     return view('person', ['name' => $name, 'last_name' => $last_name]);
 });
 
+/**
+ * Recebendo parametros da url pelo método post
+ */
+Route::post('/person/create', function (Request $req) {
+    $name = $req->input('name');
+    $last_name = $req->input('last_name');
+    return "Criar pessoa com nome: $name e sobrenome: $last_name";
+});
+
+/**
+ * Retornando um mesmo resultado para  2 diferentes métodos
+ */
+Route::match(['get', 'post'], 'person/list', function () {
+    return "Lista de pessoa cadastradas";
+});
+
+/**
+ * Retornando um mesmo resultado para  qualquer métodos
+ * Nomeando uma rota
+ */
+Route::any('person/info', function () {
+    return "Informações de pessoas";
+})->name('info');
+
+/**
+ * Chamando uma rota nomeada
+ */
+Route::get('person/info-link', function () {
+    echo "<a href=\"" . route('info') . "\"> Pessoas - Informações</a>";
+});
+
+/**
+ * Redirecionando para uma rota nomeada
+ */
+ Route::get('person/info-redirect', function () {
+     return redirect()->route('info');
+ });
+
 ```
 
 ### Listando rotas configuradas
 
 > ```bash
 > php artisan route:list
+```
+
+### Não verificando o CsrfToken
+
+Arquivo: *rotas/app/Http/Middleware/VerifyCsrfToken.php*.
+
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
+
+class VerifyCsrfToken extends Middleware
+{
+    /**
+     * Indicates whether the XSRF-TOKEN cookie should be set on the response.
+     *
+     * @var bool
+     */
+    protected $addHttpCookie = true;
+
+    /**
+     * The URIs that should be excluded from CSRF verification.
+     *
+     * @var array
+     */
+    protected $except = [
+        '/person*'
+    ];
+}
+```

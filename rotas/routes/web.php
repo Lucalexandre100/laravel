@@ -11,6 +11,8 @@
 |
  */
 
+use Illuminate\Http\Request;
+
 /** Retornando uma view */
 Route::get('/', function () {
     return view('welcome');
@@ -100,3 +102,41 @@ Route::view('/person', 'person', ['name' => 'Lucas', 'last_name' => 'Alexandre']
 Route::get('/person/{name}/{last_name}', function ($name, $last_name) {
     return view('person', ['name' => $name, 'last_name' => $last_name]);
 });
+
+/**
+ * Recebendo parametros da url pelo método post
+ */
+Route::post('/person/create', function (Request $req) {
+    $name = $req->input('name');
+    $last_name = $req->input('last_name');
+    return "Criar pessoa com nome: $name e sobrenome: $last_name";
+});
+
+/**
+ * Retornando um mesmo resultado para  2 diferentes métodos
+ */
+Route::match(['get', 'post'], 'person/list', function () {
+    return "Lista de pessoa cadastradas";
+});
+
+/**
+ * Retornando um mesmo resultado para  qualquer métodos
+ * Nomeando uma rota
+ */
+Route::any('person/info', function () {
+    return "Informações de pessoas";
+})->name('info');
+
+/**
+ * Chamando uma rota nomeada
+ */
+Route::get('person/info-link', function () {
+    echo "<a href=\"" . route('info') . "\"> Pessoas - Informações</a>";
+});
+
+/**
+ * Redirecionando para uma rota nomeada
+ */
+ Route::get('person/info-redirect', function () {
+     return redirect()->route('info');
+ });
